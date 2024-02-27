@@ -5,10 +5,17 @@ from django.db import models
 
 class Executor(models.Model):
     name = models.CharField(max_length=200)
+    ended_tasks = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Project(models.Model):
     title = models.CharField(max_length=60)
+
+    def __str__(self) -> str:
+        return self.title
 
 
 class Task(models.Model):
@@ -24,8 +31,11 @@ class Task(models.Model):
     date_created = models.DateField(auto_now_add=True)
     deadline = models.DateField()
     executor = models.ForeignKey(Executor, on_delete=models.SET_NULL, null=True)
-    priority = models.IntegerField(max_length=1, choices=PRIORITY_CHOICES)
+    priority = models.IntegerField(choices=PRIORITY_CHOICES)
 
     title = models.CharField(max_length=60)
     description = models.TextField()
     projects = models.ManyToManyField(Project)
+
+    def __str__(self) -> str:
+        return self.title
