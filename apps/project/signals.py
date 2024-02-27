@@ -11,3 +11,4 @@ def authorTagClear(sender, instance, using, **kwargs):
     executor.ended_tasks += 1
     executor.save()
     instance.delete()
+    return
