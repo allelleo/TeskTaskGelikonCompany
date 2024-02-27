@@ -47,6 +47,8 @@ class TaskSerializer(serializers.ModelSerializer):
             instance.projects.clear()
             for project in projects:
                 instance.projects.add(project)
+                instance.save()
+
         instance.save()
         return instance
 
