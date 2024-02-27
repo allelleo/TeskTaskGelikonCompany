@@ -35,8 +35,8 @@ class TaskSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         request = self.context["request"]
         instance.deadline = validated_data.get("deadline", instance.deadline)
-        if validated_data.get("executor", False):
-            executor = Executor.objects.get(name=validated_data.get("executor"))
+        if request.data.get("executor"):
+            executor = Executor.objects.get(name=request.data.get("executor"))
             instance.executor = executor
         instance.priority = validated_data.get("priority", instance.priority)
         instance.title = validated_data.get("title", instance.title)
