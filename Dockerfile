@@ -1,12 +1,7 @@
-FROM python:3.10.2-slim-bullseye
-
-ENV PIP_DISABLE_PIP_VERSION_CHECK 1
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
-WORKDIR /code
-
-COPY ./requirements.txt .
+FROM python:3.6
+RUN mkdir /webapp
+WORKDIR /webapp
+COPY . /webapp
 RUN pip install -r requirements.txt
-
-COPY . .
+EXPOSE 8000
+CMD ["python3", "manage.py", "runserver"]
