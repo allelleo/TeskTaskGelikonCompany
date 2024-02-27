@@ -30,7 +30,7 @@ class Task(models.Model):
     )
     date_created = models.DateField(auto_now_add=True)
     deadline = models.DateField()
-    executor = models.ForeignKey(Executor, on_delete=models.SET_NULL, null=True)
+    executor = models.ForeignKey(Executor, on_delete=models.PROTECT)
     priority = models.IntegerField(choices=PRIORITY_CHOICES)
 
     title = models.CharField(max_length=60)

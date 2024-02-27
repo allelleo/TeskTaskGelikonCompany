@@ -19,6 +19,15 @@ class TaskSerializer(serializers.ModelSerializer):
     executor = serializers.CharField(source="executor.name")
     projects = ProjectSerializer(read_only=True, many=True)
 
+    def create(self, validated_data):
+        request = self.context["request"]
+        projects = request.data.get("projects")
+        print(projects)
+
+        instance = super().update(instance, validated_data)
+
+        return instance
+
     class Meta:
         model = Task
         fields = [
