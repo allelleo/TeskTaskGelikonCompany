@@ -16,8 +16,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    executor = serializers.CharField(source="executor.name")
-    projects = ProjectSerializer(many=True)
+    executor = serializers.CharField(source="executor.name", read_only=True)
+    projects = ProjectSerializer(many=True, read_only=True)
 
     def create(self, validated_data):
         request = self.context["request"]
