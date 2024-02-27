@@ -53,12 +53,14 @@ class TaskSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-    def delete(self, instanse):
+    def destroy(self, request, *args, **kwargs):
         print("DELETE TASK")
-        executor = instanse.executor
+        instance = self.get_object()
+
+        executor = instance.executor
         executor.ended_tasks += 1
         executor.save()
-        instanse.delete()
+        self.perform_destroy(instance)
 
     class Meta:
         model = Task
