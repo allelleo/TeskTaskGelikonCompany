@@ -23,8 +23,9 @@ class TaskSerializer(serializers.ModelSerializer):
         request = self.context["request"]
         projects = request.data.get("projects")
         print(projects)
-
-        instance = super().update(instance, validated_data)
+        projects = [Project.objects.get(pk=i) for i in projects]
+        validated_data["projects"] = projects
+        instance = super().create(validated_data)
 
         return instance
 
