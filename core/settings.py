@@ -130,6 +130,6 @@ CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
 CELERY_BEAT_SCHEDULE = {  # scheduler configuration
     "Task_two_schedule": {  # whatever the name you want
         "task": "apps.project.tasks.deleting_overdue_tasks",  # name of task with path
-        "schedule": 1 * 60 * 60 * 24,
+        "schedule": 1 * 20,
     },
 }
