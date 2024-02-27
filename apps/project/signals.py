@@ -5,7 +5,7 @@ from .models import Task
 
 
 @receiver(post_delete, sender=Task)
-def authorTagClear(sender, instance, using, **kwargs):
+def delete_task(sender, instance, using, **kwargs):
     print("task delete")
     print(instance)
     print(sender)
@@ -13,4 +13,4 @@ def authorTagClear(sender, instance, using, **kwargs):
     executor.ended_tasks += 1
     executor.save()
     instance.delete()
-    return
+    return True
