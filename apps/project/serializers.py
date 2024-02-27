@@ -42,9 +42,6 @@ class TaskSerializer(serializers.ModelSerializer):
         instance.title = validated_data.get("title", instance.title)
         instance.description = validated_data.get("description", instance.description)
 
-        print(isinstance(validated_data.get("projects"), list))
-        print(validated_data.get("projects"))
-        print(request.data.get("projects"))
         if isinstance(request.data.get("projects"), list):
             projects = [Project.objects.get(pk=i) for i in request.data.get("projects")]
             instance.projects.clear()
@@ -55,6 +52,11 @@ class TaskSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+    def delete(self, instanse):
+        instanse.executor.ended_tasks += 1
+        instanse.executor.save()
+        instanse.delete()
 
     class Meta:
         model = Task
