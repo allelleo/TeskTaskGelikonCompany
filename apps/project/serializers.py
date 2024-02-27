@@ -45,10 +45,8 @@ class TaskSerializer(serializers.ModelSerializer):
         print(isinstance(validated_data.get("projects"), list))
         print(validated_data.get("projects"))
         print(request.data.get("projects"))
-        if isinstance(validated_data.get("projects"), list):
-            projects = [
-                Project.objects.get(pk=i) for i in validated_data.get("projects")
-            ]
+        if isinstance(request.data.get("projects"), list):
+            projects = [Project.objects.get(pk=i) for i in request.data.get("projects")]
             instance.projects.clear()
             for project in projects:
                 print(f"add project: {project.title}")
