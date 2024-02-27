@@ -21,12 +21,16 @@ class TaskSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         request = self.context["request"]
+
         projects = request.data.get("projects")
+        executor = request.data.get("executor")
+        executor = Executor.objects.get(name=executor)
         print(projects)
         for i in projects:
             print(i, type(i))
         projects = [Project.objects.get(pk=i) for i in projects]
         validated_data["projects"] = projects
+        validated_data["executor"] = executor
         instance = super().create(validated_data)
 
         return instance
