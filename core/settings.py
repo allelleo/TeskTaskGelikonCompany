@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
+from celery.schedules import crontab
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -125,3 +127,9 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
 CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+CELERY_BEAT_SCHEDULE = {  # scheduler configuration
+    "Task_two_schedule": {  # whatever the name you want
+        "task": "apps.project.tasks.deleting_overdue_tasks",  # name of task with path
+        "schedule": 1 * 60 * 60 * 24,
+    },
+}
