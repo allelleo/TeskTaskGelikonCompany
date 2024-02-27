@@ -40,7 +40,10 @@ class TaskSerializer(serializers.ModelSerializer):
         instance.priority = validated_data.get("priority", instance.priority)
         instance.title = validated_data.get("title", instance.title)
         instance.description = validated_data.get("description", instance.description)
-        if validated_data.get("projects", False):
+
+        print(isinstance(validated_data.get("projects"), list))
+        print(validated_data.get("projects"))
+        if isinstance( validated_data.get("projects"), list):
             projects = [
                 Project.objects.get(pk=i) for i in validated_data.get("projects")
             ]
