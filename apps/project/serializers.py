@@ -22,17 +22,32 @@ class TaskSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         request = self.context["request"]
 
-        projects = request.data.get("projects")
-        executor = request.data.get("executor")
-        executor = Executor.objects.get(name=executor)
-        print(projects)
-        for i in projects:
-            print(i, type(i))
-        projects = [Project.objects.get(pk=i) for i in projects]
+        executor = Executor.objects.get(name=request.data.get("executor"))
+        projects = [Project.objects.get(pk=i) for i in request.data.get("projects")]
+
         validated_data["projects"] = projects
         validated_data["executor"] = executor
+
         instance = super().create(validated_data)
 
+        return instance
+
+    def update(self, instance, validated_data):
+        instance.deadline = validated_data.get("deadline", instance.deadline)
+        if validated_data.get("executor", False):
+            executor = Executor.objects.get(name=validated_data.get("executor"))
+            instance.executor = executor
+        instance.priority = validated_data.get("priority", instance.priority)
+        instance.title = validated_data.get("title", instance.title)
+        instance.description = validated_data.get("description", instance.description)
+        if validated_data.get("projects", False):
+            projects = [
+                Project.objects.get(pk=i) for i in validated_data.get("projects")
+            ]
+            instance.projects.clear()
+            for project in projects:
+                instance.projects.add(project)
+        instance.save()
         return instance
 
     class Meta:
