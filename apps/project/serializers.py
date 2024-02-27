@@ -46,6 +46,7 @@ class TaskSerializer(serializers.ModelSerializer):
             ]
             instance.projects.clear()
             for project in projects:
+                print(f"add project: {project.title}")
                 instance.projects.add(project)
                 instance.save()
 
