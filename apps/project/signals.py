@@ -9,6 +9,7 @@ def delete_task(sender, instance, using, **kwargs):
     if instance.id is None:
         return
     print("task delete")
+    print(kwargs)
     print(instance)
     print(sender)
     executor = instance.executor
