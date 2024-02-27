@@ -16,7 +16,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    executor = serializers.CharField("executor.name")
+    executor = serializers.CharField(source="executor.name")
     projects = ProjectSerializer(read_only=True, many=True)
 
     class Meta:
