@@ -54,8 +54,9 @@ class TaskSerializer(serializers.ModelSerializer):
         return instance
 
     def delete(self, instanse):
-        instanse.executor.ended_tasks += 1
-        instanse.executor.save()
+        executor = instanse.executor
+        executor.ended_tasks += 1
+        executor.save()
         instanse.delete()
 
     class Meta:
